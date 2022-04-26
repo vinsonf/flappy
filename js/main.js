@@ -46,6 +46,11 @@ const obs = {
 
 }
 
+const bg1 = {
+    x: 0,
+
+}
+
 
 
 function draw(){
@@ -63,7 +68,8 @@ function draw(){
     
     
     
-        ctx.drawImage(bg, 0, 0);
+        ctx.drawImage(bg, bg1.x, 0);
+        ctx.drawImage(bg, bg1.x + 288, 0);
         ctx.drawImage(pipe, obs.x, obs.y);
         ctx.drawImage(bird.image, bird.x, bird.y);
     
@@ -116,6 +122,13 @@ function applyMovement() {
         console.log(score);
     }
 
+    if (bg1.x >= -288) {
+        bg1.x -= .4;
+       
+    } else {
+        bg1.x =0;
+        ctx.drawImage(bg, bg1.x, 0);
+    }
 
 }
 
