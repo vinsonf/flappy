@@ -25,31 +25,44 @@ const midflap = addImage('images/yellowbird-midflap.png');
 
 const ctx = canvas.getContext('2d');
 
-let score = 0;
-let paused = false;
+
 window.requestAnimationFrame(draw);
 
-const bird = {
-    x: 20,
-    y: 60,
-    fallingSpeed : 0,
-    image: midflap,
-    width: 34,
-    height: 24,
+let bird;
+let obs;
+let bg1;
+let score;
+let paused;
+
+resetGame();
+
+function resetGame() {
+    bird = {
+        x: 20,
+        y: 60,
+        fallingSpeed : 0,
+        image: midflap,
+        width: 34,
+        height: 24,
+    };
+    obs = {
+        x: 300,
+        y: Math.floor(Math.random() * 200) + 200,
+        gap:  150,
+        width: 52,
+    };
+    
+    bg1 = {
+        x: 0,
+    
+    }
+
+    score = 0;
+    paused = false;
 }
 
-const obs = {
-    x: 300,
-    y: Math.floor(Math.random() * 200) + 200,
-    gap:  150,
-    width: 52,
 
-}
 
-const bg1 = {
-    x: 0,
-
-}
 
 
 
@@ -78,11 +91,19 @@ function draw(){
         ctx.scale(1, -1);
         ctx.drawImage(pipe, obs.x, -obs.y + obs.gap);
         ctx.restore();
+        ctx.font = 'normal 24px Arial';
+        ctx.fillStyle = 'white';
+        ctx.fillText('Score: ' + score, 10, height - 10);
     
+    
+    } else {
+
+        ctx.fillText('Game Over', width/2 - 50, height/2);
+    
+     
+    
+ 
     }
-    
-
-
 
     window.requestAnimationFrame(draw);
 }
@@ -140,6 +161,9 @@ function randomPipeMovement() {
 
 document.addEventListener('click', () => {
     bird.fallingSpeed = -5;
+    if (paused) {
+        resetGame();
+    }
 });
 
 function xColliding() {
